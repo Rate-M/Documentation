@@ -1,11 +1,21 @@
-# RateM Dating · Backend
+# RateM Dating · Documentación del Backend
 
-API REST y servidor de WebSockets de **RateM Dating**, una aplicación web de citas con verificación de identidad y reseñas mutuas.
+Documentación del backend de **RateM Dating**, una aplicación web de citas con verificación de identidad y reseñas mutuas. Este archivo vive en el repositorio **Documentation** de la organización de GitHub **Rate-M** y se complementa con el archivo `.md` del frontend.
 
-**Asignatura:** Formulación de Proyectos de Tecnología · Desarrollo Web Integral · **Grado y sección:** 7 B
-**Profesor:** Jesús Del Toro Robledo · **Metodología:** Scrum
-**Equipo:** Nidia Elizabeth Ruiz Barraza · Angel Gabriel Tovar Campirano · Natalia Cabral Véliz · Mario Antonio Portillo Romero
+**Asignatura:** Formulación de Proyectos de Tecnología · **Grado y sección:** 7 B · **Profesor:** Jesús Del Toro Robledo
+**Metodología:** Scrum
+**Equipo:** Nidia Elizabeth Ruiz Barraza · Ángel Gabriel Tovar Campirano · Natalia Cabral Veliz · Mario Antonio Portillo Romero
 **Stack del backend:** Node.js · Express · MongoDB (Mongoose) · Socket.io · JWT · bcrypt · Jest
+
+## Organización y repositorios
+
+El proyecto se aloja en la organización de GitHub [Rate-M](https://github.com/Rate-M), que agrupa tres repositorios:
+
+| Repositorio | Contenido | Enlace |
+|---|---|---|
+| `ratem-backend` | Código del backend: API REST, WebSockets, modelos y servicios externos | https://github.com/Rate-M/ratem-backend.git |
+| `Frontend` | Código del frontend: aplicación Vue 3 | https://github.com/Rate-M/Frontend.git |
+| `Documentation` | Documentación del proyecto: un archivo `.md` para el backend (este) y otro para el frontend | https://github.com/Rate-M/Documentation.git |
 
 ## Contenido
 
@@ -16,9 +26,10 @@ API REST y servidor de WebSockets de **RateM Dating**, una aplicación web de ci
 5. [Planificación](#5-planificación)
 6. [Diseño de la solución](#6-diseño-de-la-solución)
 7. [Control de versiones](#7-control-de-versiones)
-8. [Guía del backend](#8-guía-del-backend)
-9. [Endpoints principales](#9-endpoints-principales)
-10. [Diccionario de datos](#10-diccionario-de-datos)
+8. [Diagramas](#8-diagramas)
+9. [Diccionario de datos](#9-diccionario-de-datos)
+10. [Endpoints principales](#10-endpoints-principales)
+11. [Guía del backend](#11-guía-del-backend)
 
 ---
 
@@ -93,7 +104,7 @@ Flujo que valida el MVP: registro y aceptación del aviso de privacidad → veri
 
 ## 2. Metodología de desarrollo: Scrum
 
-Scrum organiza el desarrollo en sprints de 2 semanas que entregan un incremento funcional, priorizado según el valor para el usuario. La documentación es incremental: el Product Backlog se refina de forma continua y la documentación técnica se genera conforme existen los módulos.
+Scrum organiza el desarrollo en sprints de 2 semanas que entregan un incremento funcional, priorizado según el valor para el usuario. La documentación es incremental: el Product Backlog se refina de forma continua y la documentación técnica se genera conforme existen los módulos. El backlog y los sprints se gestionan en Jira.
 
 **Justificación.** Se eligió Scrum frente a Cascada y Kanban porque combina iteraciones de duración fija (necesarias para el plazo académico), priorización continua del backlog (necesaria por la dependencia de APIs externas cuyo costo y disponibilidad no son seguros) y eventos de inspección que generan evidencia en cada sprint.
 
@@ -101,11 +112,11 @@ Scrum organiza el desarrollo en sprints de 2 semanas que entregan un incremento 
 
 | Rol | Integrante | Suplente |
 |---|---|---|
-| Product Owner | Nidia Elizabeth Ruiz Barraza | Angel Gabriel Tovar Campirano |
+| Product Owner | Nidia Elizabeth Ruiz Barraza | Ángel Gabriel Tovar Campirano |
 | Scrum Master | Nidia Elizabeth Ruiz Barraza | Product Owner |
 | Dev Backend | Nidia Elizabeth Ruiz Barraza | Mario Antonio Portillo Romero |
-| Dev Frontend | Angel Gabriel Tovar Campirano | Natalia Cabral Véliz |
-| QA / Documentación | Angel Gabriel Tovar Campirano | Nidia Elizabeth Ruiz Barraza |
+| Dev Frontend | Ángel Gabriel Tovar Campirano | Natalia Cabral Veliz |
+| QA / Documentación | Ángel Gabriel Tovar Campirano | Nidia Elizabeth Ruiz Barraza |
 
 ### 2.2 Eventos y artefactos
 
@@ -161,7 +172,7 @@ Scrum organiza el desarrollo en sprints de 2 semanas que entregan un incremento 
 
 ### 3.3 Product Backlog
 
-El backlog tiene **130 puntos de historia en 35 historias**, organizadas en 10 épicas. Las historias siguen el formato «Como [rol], quiero [acción], para [beneficio]» y sus criterios de aceptación están en el documento de proyecto de la Unidad 1.
+El backlog tiene **130 puntos de historia en 35 historias**, organizadas en 10 épicas, y se gestiona en Jira. Las historias siguen el formato «Como [rol], quiero [acción], para [beneficio]» y sus criterios de aceptación están en el documento de proyecto de la Unidad 1.
 
 | Épica | Historias | Puntos |
 |---|---|---|
@@ -180,7 +191,7 @@ El backlog tiene **130 puntos de historia en 35 historias**, organizadas en 10 �
 
 Una historia se considera terminada únicamente cuando cumple todos los criterios siguientes:
 
-1. El código está en el repositorio (rama integrada a `develop` mediante pull request revisado por otro miembro del equipo).
+1. El código está en el repositorio: rama integrada a `main` mediante pull request validado por el owner del repositorio (la Unidad 1 preveía una rama `develop`; el flujo vigente se describe en la sección 7.3).
 2. Cumple los criterios de aceptación y fue validada por el Product Owner.
 3. Cuenta con pruebas automatizadas que pasan correctamente.
 4. No introduce errores en funcionalidades existentes (pruebas de regresión).
@@ -259,7 +270,7 @@ Arquitectura cliente-servidor en tres capas (presentación, lógica de negocio y
 | Google Places API | Mapa de lugares | Catálogo amplio con caché en MongoDB para no exceder el plan gratuito |
 | OpenAI Moderation / Perspective API | Moderación con IA | Complementa el filtro por diccionario |
 | Jest + Supertest, ESLint | Pruebas y calidad | Exigidas por la Definition of Done |
-| GitHub + Render + MongoDB Atlas | Repositorio y despliegue | Planes gratuitos suficientes; despliegue automático desde `develop` |
+| GitHub + Render + MongoDB Atlas | Repositorio y despliegue | Planes gratuitos suficientes; despliegue automático desde `main` |
 
 ---
 
@@ -267,77 +278,75 @@ Arquitectura cliente-servidor en tres capas (presentación, lógica de negocio y
 
 ### 7.1 Justificación de la herramienta y la plataforma
 
-**Git** se eligió porque es distribuido: cada integrante trabaja con una copia completa del historial y crea ramas en segundos, lo que permite una rama por historia de usuario. Se descartó Subversion por ser centralizado y no ofrecer pull requests para la revisión de código que exige la Definition of Done.
+**Git** se eligió porque es distribuido: cada integrante trabaja con una copia completa del historial y crea ramas en segundos, lo que permite una rama por tarea de Jira que se combina a `main` solo cuando cumple la Definition of Done. Se descartó Subversion por ser centralizado y no ofrecer pull requests para la revisión de código que exige la Definition of Done.
 
-**GitHub** se eligió frente a GitLab y Bitbucket porque reúne en un solo lugar el backlog (Issues y Projects), la revisión de código, la integración continua (Actions) y la evidencia de participación, sin sumar herramientas. Además es la plataforma que el equipo ya adoptó, lo que reduce el riesgo R-02. GitLab se descartó por la curva de aprendizaje adicional y Bitbucket por su dependencia de Jira para el backlog.
+**GitHub** se eligió frente a GitLab y Bitbucket porque reúne en un solo lugar la revisión de código, la integración continua y la evidencia de participación, mientras que el backlog y los sprints se gestionan en Jira. Además es la plataforma que el equipo ya adoptó, lo que reduce el riesgo R-02. GitLab se descartó por la curva de aprendizaje adicional y Bitbucket porque el equipo ya trabajaba con GitHub y de la suite de Atlassian solo necesita Jira.
 
 ### 7.2 Estructura de repositorios
 
-| Repositorio | Contenido | Despliegue |
-|---|---|---|
-| `ratem-dating-backend` (este) | API REST, WebSockets, modelos y servicios externos | Render |
-| `ratem-dating-frontend` | Aplicación Vue 3 | Vercel |
-
-El punto de integración es el contrato de la API (sección 9), que se define antes de implementar cada historia (mitigación de R-04).
+El proyecto se aloja en la organización de GitHub **Rate-M**, con tres repositorios (ver la tabla del inicio). El backend y el frontend están separados porque se despliegan en servicios distintos (Render y Vercel), tienen dependencias y pruebas independientes y reflejan la división de roles (Dev Backend y Dev Frontend). La documentación se mantiene en un repositorio propio. El punto de integración entre el código es el contrato de la API (sección 10), que se define antes de implementar cada historia (mitigación de R-04).
 
 ### 7.3 Flujo de trabajo
 
-Se usa **Git Flow simplificado**: `main`, `develop` y una rama por historia. Se descartó GitHub Flow porque no tiene rama de integración y el ambiente de pruebas se despliega desde `develop`; se descartó Git Flow completo por ser excesivo para 6 sprints y 4 integrantes.
+Se adopta **GitHub Flow**: una sola rama estable, `main`, y una rama de trabajo corta por cada tarea de Jira. A diferencia de lo previsto en la Unidad 1, el equipo no usa una rama `develop`. Se descartó Git Flow, que agrega ramas de integración, de release y de soporte, porque es excesivo para 6 sprints y 4 integrantes.
 
 | Rama | Propósito | Se integra a | Ejemplo |
 |---|---|---|---|
-| `main` | Código estable; recibe el incremento de cada sprint y lleva etiqueta de versión | — | `main` |
-| `develop` | Integración del sprint y origen del despliegue de pruebas | `main` (cierre de sprint) | `develop` |
-| `feature/*` | Una historia de usuario | `develop` | `feature/US-13-chat-tiempo-real` |
-| `fix/*` | Corrección de un defecto en `develop` | `develop` | `fix/US-02-expiracion-token` |
-| `docs/*` | Documentación | `develop` | `docs/US-09-endpoints-perfil` |
-| `chore/*` | Configuración y dependencias | `develop` | `chore/configuracion-eslint` |
-| `hotfix/*` | Error crítico en `main` | `main` y `develop` | `hotfix/limite-intentos-login` |
+| `main` | Código estable. Única rama de larga duración; recibe el trabajo de cada tarea mediante pull request validado por el owner | — | `main` |
+| `feature/*` | Una tarea de Jira (código `RM-#`) | `main` | `feature/RM-7-Formulario-de-registro-con-validación-en-Vue` |
 
-**Convención de commits** (Conventional Commits en español): `tipo(US-XX): descripción`, en presente, con máximo 72 caracteres y un solo cambio lógico por commit.
+**Nomenclatura.** La rama inicia con `feature/`, seguida del código que Jira asigna a la tarea (`RM-#`, donde `RM` es la clave del proyecto) y del título de la tarea con guiones en lugar de espacios.
 
-| Tipo | Uso | Ejemplo |
+**Convención de commits.** Cada commit lleva el código de la tarea de Jira seguido de su título, con el formato `RM-# Título de la tarea`, el mismo nombre que se usa en la rama. Cada vez que se avanza en la tarea se registra un commit con este formato, de modo que el historial se lea por tarea.
+
+| Elemento | Formato | Ejemplo |
 |---|---|---|
-| `feat` | Nueva funcionalidad | `feat(US-13): agrega el servidor de Socket.io` |
-| `fix` | Corrección | `fix(US-02): corrige la expiración del JWT` |
-| `docs` | Documentación | `docs(US-09): documenta GET /profiles/:id` |
-| `refactor` | Reestructura sin cambiar el comportamiento | `refactor(US-16): separa el cálculo de racha` |
-| `test` | Pruebas | `test(US-01): agrega pruebas del registro` |
-| `chore` / `ci` | Configuración y flujos de integración continua | `ci: agrega el flujo de pruebas` |
+| Rama | `feature/RM-#-Título-de-la-tarea` | `feature/RM-7-Formulario-de-registro-con-validación-en-Vue` |
+| Commit | `RM-# Título de la tarea` | `RM-7 Formulario de registro con validación en Vue` |
 
-**Políticas de combinación**
+**Política de combinación.** `feature/*` → `main` con **merge**: pull request validado por el owner del repositorio, que realiza el merge (Definition of Done, punto 1); criterios de aceptación de la tarea validados y verificaciones automáticas en verde. Se conservan los commits de cada tarea y la gráfica de ramas como evidencia.
 
-| Combinación | Método | Condiciones |
-|---|---|---|
-| Ramas de trabajo → `develop` | Merge commit | Pull request aprobado por un integrante distinto al autor, verificaciones en verde, rama actualizada y criterios de aceptación validados |
-| `develop` → `main` | Merge commit | Solo al cierre del sprint, tras el Sprint Review aceptado por el Product Owner y con regresión aprobada; se crea la etiqueta |
-| `hotfix/*` → `main` y `develop` | Merge commit | Revisión de un integrante; etiqueta de parche |
+**Gestión de pull requests**
 
-**Gestión de pull requests:** título `US-XX: descripción`, plantilla con historia, cambios, forma de probarlos y lista de la Definition of Done; etiquetas `backend`, tipo y `sprint-N`; vínculo al issue con `Closes #n`; revisión en máximo 24 horas hábiles; pull requests pequeños (menos de 400 líneas); y actualización previa con `git pull --rebase origin develop`. No se reescribe el historial de `main` ni de `develop`.
+1. El autor abre el pull request hacia `main` desde su rama de trabajo, con el código y el título de la tarea (por ejemplo, `RM-7 Formulario de registro con validación en Vue`), y llena la plantilla del repositorio.
+2. La descripción incluye la tarea de Jira, los cambios realizados, cómo probarlos y la lista de verificación de la Definition of Done.
+3. El owner del repositorio revisa y valida el pull request; las conversaciones deben quedar resueltas antes de combinar.
+4. Con su validación y las verificaciones en verde, el owner realiza el merge a `main`.
+5. Cada pull request se mantiene pequeño (idealmente menos de 400 líneas modificadas), en línea con el límite de 8 puntos por historia.
+
+Para evitar conflictos, antes de crear la rama se guardan los cambios pendientes, se actualiza `main` y se recuperan los cambios. No se reescribe el historial de `main` y no se permite el force push.
 
 ```bash
-git switch develop
-git pull origin develop
-git switch -c feature/US-13-chat-tiempo-real
+git stash
+git pull origin main
+git stash pop
+git checkout -b feature/RM-7-Formulario-de-registro-con-validación-en-Vue
 git add .
-git commit -m "feat(US-13): agrega el servidor de Socket.io"
-git pull --rebase origin develop
-git push -u origin feature/US-13-chat-tiempo-real
-# abrir el pull request hacia develop
+git commit -m "RM-7 Formulario de registro con validación en Vue"
+git push origin feature/RM-7-Formulario-de-registro-con-validación-en-Vue
+# abrir el pull request hacia main
 ```
 
-**Versionado:** semántico, con etiquetas anotadas en `main` al cierre de cada sprint.
+**Versionado.** Semántico, con etiquetas anotadas en `main`: cada sprint incrementa la versión menor y la versión final es `v1.0.0`. Las etiquetas se crean en los repositorios de backend y frontend al cierre de cada sprint y coinciden con los hitos del cronograma.
 
 | Etiqueta | Sprint | Cierre | Contenido |
 |---|---|---|---|
-| `v0.1.0` | 1 | 09/10/2026 | Registro, inicio de sesión, consentimientos y perfil |
-| `v0.2.0` | 2 | 23/10/2026 | Verificación de identidad y perfil público |
-| `v0.3.0` | 3 | 06/11/2026 | Match y chat en tiempo real |
-| `v0.4.0` | 4 | 20/11/2026 | Racha, mapa e invitación |
-| `v0.5.0` | 5 | 04/12/2026 | MVP completo |
-| `v1.0.0` | 6 | 18/12/2026 | Moderación completa y documentación final |
+| `v0.1.0` | 1 | 09/10/2026 | Registro, inicio de sesión, consentimientos y perfil (H1) |
+| `v0.2.0` | 2 | 23/10/2026 | Verificación de identidad y perfil público (H2) |
+| `v0.3.0` | 3 | 06/11/2026 | Match y chat en tiempo real (H3) |
+| `v0.4.0` | 4 | 20/11/2026 | Racha, mapa e invitación (H4) |
+| `v0.5.0` | 5 | 04/12/2026 | MVP completo (H5) |
+| `v1.0.0` | 6 | 18/12/2026 | Moderación completa y documentación final (H6) |
 
-**Tablero:** GitHub Projects con las columnas Product Backlog, Sprint Backlog, En progreso, En revisión y Terminada; un milestone por sprint y un issue por historia con sus tareas (por ejemplo, T13.1 a T13.3).
+**Gestión del trabajo en Jira.** Cada historia del Product Backlog y sus tareas técnicas se registran en Jira, que asigna a cada tarea un código `RM-#` (por ejemplo, `RM-7`). Ese código identifica la tarea en la rama, el commit y el pull request. Cada sprint se planifica en Jira y su tablero refleja los estados de Scrum:
+
+| Columna del tablero | Significado |
+|---|---|
+| Product Backlog | Historias priorizadas y estimadas que aún no entran a un sprint |
+| Sprint Backlog | Historias comprometidas en el Sprint Planning |
+| En progreso | Tarea con rama de trabajo activa |
+| En revisión | Pull request abierto y pendiente de validación del owner |
+| Terminada | Historia que cumple los criterios de aceptación y la Definition of Done |
 
 ### 7.4 Configuración del entorno de versiones
 
@@ -348,23 +357,36 @@ git config --global user.name "Nombre Apellido"
 git config --global user.email "correo@institucional.edu.mx"
 git config --global init.defaultBranch main
 git config --global pull.rebase true
+git config --global core.editor "code --wait"
 ```
 
-El archivo `.gitattributes` contiene `* text=auto eol=lf` para normalizar los saltos de línea.
+Cada repositorio incluye un archivo `.gitattributes` con la línea `* text=auto eol=lf` para normalizar los saltos de línea entre sistemas operativos.
 
 **Control de accesos**
 
-| Rol | Quién | Permisos |
+| Rol en el repositorio | Quién | Permisos |
 |---|---|---|
-| Administrador | Scrum Master | Configuración, protección de ramas y secretos |
-| Escritura | Demás integrantes | Ramas de trabajo y pull requests (nunca aprobar el propio) |
-| Lectura | Docente | Consulta del código, historial y tablero |
+| Administrador (owner) | Scrum Master | Validar los pull requests y realizar el merge a `main`; configurar el repositorio, la protección de ramas, los secretos y las integraciones de despliegue |
+| Escritura | Demás integrantes | Crear ramas de trabajo, subir commits a ellas y abrir pull requests hacia `main` |
+| Lectura | Docente | Consultar el código, el historial, los pull requests y el tablero |
 
-El repositorio es privado durante el desarrollo. Todos los integrantes usan verificación en dos pasos y autenticación con llave SSH (ed25519) o token personal con permisos mínimos.
+Los tres repositorios de la organización Rate-M son privados durante el desarrollo. Todos los integrantes activan la verificación en dos pasos y se autentican con una llave SSH propia (ed25519) o con un token personal con permisos mínimos, nunca con su contraseña.
 
-**Protección de ramas (`main` y `develop`):** pull request obligatorio; 1 aprobación (en `main`, además la aceptación del Product Owner); aprobaciones descartadas al subir nuevos commits; conversaciones resueltas; verificaciones automáticas obligatorias (ESLint, pruebas y compilación); rama actualizada antes de combinar; sin push directo, sin force push y sin eliminación; reglas aplicadas también a administradores.
+**Protección de la rama `main`**
 
-**Archivos de exclusión** (`.gitignore`):
+| Regla | `main` |
+|---|---|
+| Requerir pull request antes de combinar | Sí |
+| Aprobaciones requeridas | 1, la validación del owner del repositorio |
+| Descartar aprobaciones al subir nuevos commits | Sí |
+| Requerir resolución de conversaciones | Sí |
+| Verificaciones automáticas obligatorias | Sí (ESLint, pruebas y compilación) |
+| Requerir rama actualizada antes de combinar | Sí |
+| Push directo | No |
+| Force push y eliminación de la rama | No |
+| Aplicar las reglas también a administradores | Sí |
+
+**Archivos de exclusión** (`.gitignore` del repositorio `ratem-backend`):
 
 ```gitignore
 # Dependencias
@@ -394,110 +416,66 @@ Thumbs.db
 !.vscode/extensions.json
 ```
 
-**Credenciales y llaves.** Ninguna credencial se sube al repositorio (mitigación de R-08). Los valores reales viven en el `.env` local de cada integrante, en los secretos de GitHub Actions y en las variables de entorno de Render. El archivo `.env.example` documenta los nombres sin valores:
+**Credenciales y llaves.** Ninguna credencial se sube al repositorio (mitigación de R-08). El repositorio incluye un archivo `.env.example` con los nombres de las variables y sin valores; los valores reales se guardan en el `.env` local de cada integrante (ignorado por Git), en los secretos de GitHub Actions y en las variables de entorno de Render.
 
 | Variable | Descripción |
 |---|---|
 | `PORT`, `NODE_ENV` | Puerto y ambiente de ejecución |
 | `MONGODB_URI` | Cadena de conexión a MongoDB Atlas |
-| `JWT_SECRET`, `JWT_EXPIRES_IN` | Firma y expiración del token (24 h) |
-| `BCRYPT_ROUNDS` | Factor de costo del hash (10 o mayor) |
-| `CLIENT_URL` | Origen permitido por CORS |
-| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Correo de confirmación y recuperación |
-| `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | Fotos de perfil |
-| `GOOGLE_PLACES_API_KEY` | Consulta de lugares |
-| `KYC_API_KEY`, `KYC_WEBHOOK_SECRET` | Verificación de identidad |
-| `MODERATION_API_KEY` | Moderación con IA |
+| `JWT_SECRET`, `JWT_EXPIRES_IN` | Firma y expiración del token de sesión (24 h) |
+| `BCRYPT_ROUNDS` | Factor de costo del hash de contraseñas (10 o mayor) |
+| `CLIENT_URL` | Origen permitido por CORS (URL del frontend) |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` | Correo de confirmación y recuperación de contraseña |
+| `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET` | Almacenamiento de las fotos de perfil |
+| `GOOGLE_PLACES_API_KEY` | Consulta de lugares para citas |
+| `KYC_API_KEY`, `KYC_WEBHOOK_SECRET` | Verificación de identidad y validación de su webhook |
+| `MODERATION_API_KEY` | API de moderación con IA |
 
-Si una credencial se publica por error, se revoca y se rota de inmediato. Dependabot está activo para las alertas de dependencias.
+Si una credencial se publica por error, se revoca y se rota de inmediato, y se limpia el historial cuando es necesario. Dependabot está activo para las alertas de dependencias.
 
-**Integración continua.** En cada pull request hacia `develop` o `main` se ejecuta `npm ci`, ESLint y Jest con cobertura, y se exige al menos 70 % (RNF-12). Al hacer push a `develop` se despliega automáticamente el ambiente de pruebas en Render.
+**Integración continua**
 
----
-
-## 8. Guía del backend
-
-### 8.1 Requisitos
-
-Node.js 20 o superior, npm y una cuenta gratuita de MongoDB Atlas (o MongoDB local).
-
-### 8.2 Instalación y ejecución
-
-```bash
-git clone https://github.com/<organización>/ratem-dating-backend.git
-cd ratem-dating-backend
-npm ci
-cp .env.example .env     # completar los valores
-npm run dev
-```
-
-| Script | Descripción |
+| Evento | Pasos del flujo |
 |---|---|
-| `npm run dev` | Servidor en modo desarrollo con recarga automática |
-| `npm start` | Servidor en modo producción |
-| `npm run lint` | Análisis con ESLint |
-| `npm test` | Pruebas con Jest y Supertest |
-| `npm run test:coverage` | Pruebas con reporte de cobertura (mínimo 70 %) |
-| `npm run seed` | Datos de prueba ficticios (perfiles generados con Faker) |
+| Pull request hacia `main` | Instalar dependencias (`npm ci`), ejecutar ESLint y Jest con cobertura, y exigir al menos 70 % de cobertura (RNF-12) |
+| Push a `main` | Despliegue automático al ambiente de pruebas en Render |
 
-### 8.3 Estructura del proyecto
+### 7.5 Evidencias del repositorio
 
-```text
-src/
-├── config/          conexión a la base de datos y variables de entorno
-├── modules/
-│   ├── auth/        registro, login, recuperación y confirmación de correo
-│   ├── users/       perfiles, consentimientos y bloqueos
-│   ├── matches/     swipes, matches y racha
-│   ├── messages/    historial del chat y eventos de Socket.io
-│   ├── places/      Google Places con caché y lugares de la comunidad
-│   ├── dates/       invitaciones, check-ins y confirmación
-│   ├── reviews/     reseñas mutuas y reportes
-│   └── moderation/  diccionario, API de moderación y cola de revisión
-├── services/        KYC, Google Places, moderación, correo y Cloudinary
-├── middlewares/     autenticación JWT, roles, validación y límite de intentos
-├── jobs/            tareas programadas (cálculo diario de la racha)
-└── app.js           aplicación Express
-tests/               pruebas unitarias y de integración
-```
+| Evidencia | Qué demuestra | Dónde consultarla |
+|---|---|---|
+| Historial de commits | Commits pequeños, con el código de la tarea (`RM-#`) y de los cuatro integrantes | Pestaña Commits o `git log --oneline --graph` |
+| Ramas por tarea | Una rama `feature/RM-#-*` por tarea de Jira, creada desde `main` | Pestaña Branches y gráfica de red (Insights → Network) |
+| Pull requests cerrados | Validación del owner antes de combinar a `main` | Pestaña Pull requests (filtro: cerrados) |
+| Protección de ramas | Reglas activas en `main` | Settings → Branches |
+| Etiquetas de versión | Una versión por sprint (`v0.1.0` a `v1.0.0`) | Releases y Tags |
+| Tablero de Jira | Seguimiento del Sprint Backlog por tarea y por sprint | Tablero del proyecto en Jira |
+| Contribuciones | Participación de los cuatro integrantes | Insights → Contributors |
+| Verificaciones automáticas | ESLint, pruebas y compilación en cada pull request | Pestaña Actions |
 
 ---
 
-## 9. Endpoints principales
+## 8. Diagramas
 
-Contrato propuesto de la API. Cada endpoint se confirma y documenta con su ruta, método, parámetros y respuestas al cerrar su historia (Definition of Done, punto 5).
+El paquete reúne **29 diagramas UML** del diseño del sistema, elaborados a partir de los requisitos funcionales (RF-01 a RF-11) y las historias de usuario (US-01 a US-35). Representan el diseño propuesto: sus mensajes y componentes son conceptuales y no corresponden a rutas ni a código implementados. El paquete completo en PDF, con los diagramas en su tamaño original, está adjunto en el Drive del proyecto.
 
-| Método | Ruta | Descripción | Historia |
-|---|---|---|---|
-| POST | `/auth/register` | Registro con correo y contraseña | US-01 |
-| GET | `/auth/confirm/:token` | Confirmación de correo | US-01 |
-| POST | `/auth/login` | Inicio de sesión (JWT) | US-02 |
-| POST | `/auth/forgot-password` · `/auth/reset-password` | Recuperación de contraseña | US-03 |
-| POST | `/consents` · DELETE `/consents/:type` | Registrar y revocar consentimientos | US-33, US-34 |
-| POST | `/verification` · GET `/verification/status` | Iniciar y consultar la verificación | US-04, US-05 |
-| POST | `/verification/webhook` | Veredicto del proveedor KYC | US-04, US-06 |
-| POST · GET · PATCH | `/profiles` · `/profiles/me` | Crear, consultar y editar mi perfil | US-07, US-08 |
-| GET | `/profiles/:id` | Perfil público con promedio y reseñas | US-09 |
-| GET | `/discover` | Perfiles para evaluar, con filtros | US-10 |
-| POST | `/swipes` | “Me gusta” o “pasar” | US-11, US-12 |
-| GET · DELETE | `/matches` · `/matches/:id` | Listar y deshacer matches | US-12, US-14, US-15 |
-| GET | `/matches/:id/messages` | Historial del chat | US-13 |
-| WS | `message:send` · `message:new` · `message:read` | Eventos del chat en tiempo real | US-13 |
-| GET · POST | `/places` | Lugares por categoría y proponer uno nuevo | US-19, US-20 |
-| POST | `/dates` | Invitar a cita | US-22 |
-| PATCH | `/dates/:id/respond` | Aceptar, rechazar o proponer otra hora | US-23 |
-| POST | `/dates/:id/checkin` | Verificación por geolocalización | US-24 |
-| POST | `/dates/:id/confirm-manual` | Confirmación manual | US-25 |
-| POST | `/dates/:id/reviews` | Calificar y comentar | US-26, US-27 |
-| POST | `/reports` · POST `/blocks` | Reportar contenido y bloquear usuarios | US-28 |
-| GET · PATCH | `/moderation/queue` | Cola y decisiones del moderador | US-21, US-31 |
-| DELETE | `/account` | Solicitud de eliminación (ARCO) | US-35 |
+| Tipo | Cantidad | Diagramas incluidos |
+|---|---|---|
+| Casos de uso | 11 | Acceso y autenticación (RF-01); verificación de identidad (RF-02); gestión de perfiles (RF-03); descubrimiento y match (RF-04); mensajería (RF-05); rachas de conversación (RF-06); mapa y lugares (RF-07); invitaciones y citas (RF-08); reseñas mutuas (RF-09); moderación de contenido (RF-10); privacidad y derechos (RF-11) |
+| Actividades | 5 | Registro y verificación; match, chat y racha; invitación y confirmación; reseñas y publicación conjunta; moderación y reportes |
+| Clases | 3 | Relaciones entre las 12 colecciones; usuarios, interacciones y mensajería (1/2); citas, reseñas y seguridad (2/2) |
+| Componentes | 1 | Arquitectura lógica: aplicación web Vue 3, API Express, Socket.io, reglas de negocio, MongoDB y servicios externos |
+| Despliegue | 1 | Navegador, hosting del frontend y del backend, MongoDB y servicios externos; concretado en Render y Vercel |
+| Estados | 3 | Verificación de identidad; invitación y cita; ciclo de vida de la reseña |
+| Secuencia | 5 | Registro y verificación; descubrimiento, match y chat; racha diaria sin doble cómputo; invitación y confirmación de cita; reseñas mutuas y correcciones |
+
+**Modelado de la base de datos.** Se optó por una base de datos NoSQL en MongoDB porque la aplicación está orientada a una red social, que requiere datos semiestructurados para manejarlos de forma óptima. Los tres diagramas de clases documentan sus 12 colecciones, y el detalle de campos, restricciones e índices está en la sección 9.
 
 ---
 
-## 10. Diccionario de datos
+## 9. Diccionario de datos
 
-Modelo de documentos en MongoDB (Mongoose) con 12 colecciones. **PK:** `_id` (ObjectId automático) en todas. **FK:** ObjectId con referencia a otra colección. **Req** = obligatorio; **Único** = índice único; **Def** = valor por defecto.
+Modelo de documentos en MongoDB (Mongoose) con 12 colecciones, consistente con el diagrama del modelo de datos. **PK:** `_id` (ObjectId automático) en todas. **FK:** ObjectId con referencia a otra colección. **Req** = obligatorio; **Único** = índice único; **Def** = valor por defecto. Privacidad: no se guardan imágenes del documento ni de la selfie (RNF-03) y la ubicación solo se registra dentro de la ventana de la cita (RNF-04).
 
 ### User
 
@@ -683,6 +661,104 @@ Modelo de documentos en MongoDB (Mongoose) con 12 colecciones. **PK:** `_id` (Ob
 | Place | 1 a N | DateEvent | `DateEvent.place.placeId` |
 | DateEvent | 1 a N | Checkin, Review | `Checkin.dateEvent`, `Review.dateEvent` |
 | User | 1 a N | Review | `Review.author`, `Review.subject` |
+
+### Índices principales
+
+| Colección | Índice | Tipo | Propósito |
+|---|---|---|---|
+| User | `email` | Único | Evitar correos duplicados |
+| Profile | `user` | Único | Un perfil por usuario |
+| Swipe | `(from, to)` | Único compuesto | No repetir perfiles evaluados |
+| Match | `pairKey` | Único | Evitar matches duplicados |
+| Message | `(match, _id)` | Compuesto | Cargar el historial del chat en orden |
+| Place | `location` | 2dsphere | Búsqueda de lugares cercanos |
+| Place | `googlePlaceId` | Único (sparse) | Evitar duplicar lugares de Google |
+| Checkin | `(dateEvent, user)` | Único compuesto | Un check-in por usuario por cita |
+| Review | `(dateEvent, author)` | Único compuesto | Una reseña por persona por cita |
+| Report | `(targetType, targetId, reportedBy)` | Único compuesto | Un reporte por usuario por contenido |
+| Block | `(blocker, blocked)` | Único compuesto | Evitar bloqueos duplicados |
+
+---
+
+## 10. Endpoints principales
+
+Contrato propuesto de la API. Cada endpoint se confirma y documenta con su ruta, método, parámetros y respuestas al cerrar su historia (Definition of Done, punto 5).
+
+| Método | Ruta | Descripción | Historia |
+|---|---|---|---|
+| POST | `/auth/register` | Registro con correo y contraseña | US-01 |
+| GET | `/auth/confirm/:token` | Confirmación de correo | US-01 |
+| POST | `/auth/login` | Inicio de sesión (JWT) | US-02 |
+| POST | `/auth/forgot-password` · `/auth/reset-password` | Recuperación de contraseña | US-03 |
+| POST | `/consents` · DELETE `/consents/:type` | Registrar y revocar consentimientos | US-33, US-34 |
+| POST | `/verification` · GET `/verification/status` | Iniciar y consultar la verificación | US-04, US-05 |
+| POST | `/verification/webhook` | Veredicto del proveedor KYC | US-04, US-06 |
+| POST · GET · PATCH | `/profiles` · `/profiles/me` | Crear, consultar y editar mi perfil | US-07, US-08 |
+| GET | `/profiles/:id` | Perfil público con promedio y reseñas | US-09 |
+| GET | `/discover` | Perfiles para evaluar, con filtros | US-10 |
+| POST | `/swipes` | “Me gusta” o “pasar” | US-11, US-12 |
+| GET · DELETE | `/matches` · `/matches/:id` | Listar y deshacer matches | US-12, US-14, US-15 |
+| GET | `/matches/:id/messages` | Historial del chat | US-13 |
+| WS | `message:send` · `message:new` · `message:read` | Eventos del chat en tiempo real | US-13 |
+| GET · POST | `/places` | Lugares por categoría y proponer uno nuevo | US-19, US-20 |
+| POST | `/dates` | Invitar a cita | US-22 |
+| PATCH | `/dates/:id/respond` | Aceptar, rechazar o proponer otra hora | US-23 |
+| POST | `/dates/:id/checkin` | Verificación por geolocalización | US-24 |
+| POST | `/dates/:id/confirm-manual` | Confirmación manual | US-25 |
+| POST | `/dates/:id/reviews` | Calificar y comentar | US-26, US-27 |
+| POST | `/reports` · POST `/blocks` | Reportar contenido y bloquear usuarios | US-28 |
+| GET · PATCH | `/moderation/queue` | Cola y decisiones del moderador | US-21, US-31 |
+| DELETE | `/account` | Solicitud de eliminación (ARCO) | US-35 |
+
+---
+
+## 11. Guía del backend
+
+La estructura y los scripts siguientes son la propuesta de diseño del repositorio `ratem-backend` y se confirman conforme se implementan los módulos en cada sprint.
+
+### 11.1 Requisitos
+
+Node.js 20 o superior, npm y una cuenta gratuita de MongoDB Atlas (o MongoDB local).
+
+### 11.2 Instalación y ejecución
+
+```bash
+git clone https://github.com/Rate-M/ratem-backend.git
+cd ratem-backend
+npm ci
+cp .env.example .env     # completar los valores
+npm run dev
+```
+
+| Script | Descripción |
+|---|---|
+| `npm run dev` | Servidor en modo desarrollo con recarga automática |
+| `npm start` | Servidor en modo producción |
+| `npm run lint` | Análisis con ESLint |
+| `npm test` | Pruebas con Jest y Supertest |
+| `npm run test:coverage` | Pruebas con reporte de cobertura (mínimo 70 %) |
+| `npm run seed` | Datos de prueba ficticios (perfiles generados con Faker) |
+
+### 11.3 Estructura del proyecto
+
+```text
+src/
+├── config/          conexión a la base de datos y variables de entorno
+├── modules/
+│   ├── auth/        registro, login, recuperación y confirmación de correo
+│   ├── users/       perfiles, consentimientos y bloqueos
+│   ├── matches/     swipes, matches y racha
+│   ├── messages/    historial del chat y eventos de Socket.io
+│   ├── places/      Google Places con caché y lugares de la comunidad
+│   ├── dates/       invitaciones, check-ins y confirmación
+│   ├── reviews/     reseñas mutuas y reportes
+│   └── moderation/  diccionario, API de moderación y cola de revisión
+├── services/        KYC, Google Places, moderación, correo y Cloudinary
+├── middlewares/     autenticación JWT, roles, validación y límite de intentos
+├── jobs/            tareas programadas (cálculo diario de la racha)
+└── app.js           aplicación Express
+tests/               pruebas unitarias y de integración
+```
 
 ---
 
